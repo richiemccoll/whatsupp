@@ -4,7 +4,7 @@
   "description": "Whatsupp server app",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node-dev index.ts"
   },
   "author": "Richie McColl",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "@types/node": "^12.6.8",
     "prettier": "^1.18.2",
     "ts-node": "^8.3.0",
+    "ts-node-dev": "^1.0.0-pre.40",
     "typescript": "^3.5.3"
   },
   "dependencies": {
