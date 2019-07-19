@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 
+import { chats } from './mocks/chats';
+
 const app = express();
 
 app.use(cors());
 
 app.get('/chats', (req, res) => {
-  res.send('hey');
+  res.json(chats);
 });
 
 const port = process.env.PORT || 4000;
