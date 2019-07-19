@@ -1,20 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 
-const App: React.FC = () => {
-  const [chats, setChats] = useState<any[]>([]);
+import ChatList from './pages/Chat';
+import { Navbar } from './App.styles';
 
-  useMemo(async () => {
-    const body = await fetch('/chats');
-    const chats = await body.json();
-    setChats(chats);
-  }, []);
-
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
-      <section>{JSON.stringify(chats)}</section>
+      <Navbar>Whatsupp</Navbar>
+      <ChatList />
     </div>
   );
-};
-
-export default App;
+}
