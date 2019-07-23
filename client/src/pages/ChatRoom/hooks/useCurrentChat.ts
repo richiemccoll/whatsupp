@@ -10,5 +10,5 @@ export default function useCurrentChat(id: string) {
     setCurrentChat(currentChat);
   }, [id]);
 
-  return currentChat;
+  return { chat: currentChat, setCurrentChat };
 }
