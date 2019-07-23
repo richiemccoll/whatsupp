@@ -1,19 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
+import { History } from 'history';
 
 import useChats from './hooks/useChats';
 import ChatList from './components/ChatList';
 
-const Container = styled.div`
-  height: 100vh;
-`;
+import { Container, Navbar } from './styles';
 
-export default function ChatPage() {
+interface ChatsPageProps {
+  history: History;
+}
+
+export default function ChatPage({ history }: ChatsPageProps) {
   const chats = useChats();
 
   return (
     <Container>
-      <ChatList chats={chats} />
+      <Navbar>Whatsupp</Navbar>
+      <ChatList chats={chats} history={history} />
     </Container>
   );
 }
