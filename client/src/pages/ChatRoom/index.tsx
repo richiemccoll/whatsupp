@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { History } from 'history';
+import { useApolloClient } from 'react-apollo-hooks';
 
-import useCurrentChat from './hooks/useCurrentChat';
+import useCurrentChat, { getCurrentChatQuery } from './hooks/useCurrentChat';
 import ChatNavigation from './components/ChatNavigation/';
 import MessagesList from './components/MessagesList/';
 import MessageInput from './components/MessageInput/';
@@ -13,7 +14,8 @@ interface ChatRoomProps {
 }
 
 export default function ChatRoom(props: ChatRoomProps) {
-  const { chat, setCurrentChat } = useCurrentChat(props.chatId);
+  const { chat } = useCurrentChat(props.chatId);
+  const client = useApolloClient();
   const handleSendMessage = useCallback(
     (content: string) => {
       if (!chat) return null;
@@ -21,13 +23,20 @@ export default function ChatRoom(props: ChatRoomProps) {
         id: (chat.messages.length + 10).toString(),
         createdAt: new Date(),
         content,
+        __typename: 'Chat',
       };
-      setCurrentChat({
-        ...chat,
-        messages: chat.messages.concat(message),
+      client.writeQuery({
+        query: getCurrentChatQuery,
+        variables: { chatId: props.chatId },
+        data: {
+          chat: {
+            ...chat,
+            messages: chat.messages.concat(message),
+          },
+        },
       });
     },
-    [chat, setCurrentChat]
+    [chat, props.chatId, client]
   );
 
   if (!chat) {

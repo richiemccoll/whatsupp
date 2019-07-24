@@ -12,7 +12,9 @@ interface ChatsPageProps {
 
 export default function ChatPage({ history }: ChatsPageProps) {
   const chats = useChats();
-
+  if (!chats) {
+    return null;
+  }
   return (
     <Container>
       <Navbar>Whatsupp</Navbar>

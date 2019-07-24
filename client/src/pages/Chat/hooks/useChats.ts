@@ -1,14 +1,24 @@
-import { useState, useMemo } from 'react';
-import chatService from '../services/chat';
+import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
 import { ChatList } from '../types/chat.d';
 
-export default function useChats(): ChatList {
-  const [chats, setChats] = useState<any[]>([]);
+const getChatsQuery = gql`
+  query GetChats {
+    chats {
+      id
+      name
+      picture
+      lastMessage {
+        id
+        content
+        createdAt
+      }
+    }
+  }
+`;
 
-  useMemo(async () => {
-    const chats = await chatService.getChats();
-    setChats(chats);
-  }, []);
+export default function useChats(): ChatList {
+  const { data: { chats = null } = {} } = useQuery<any>(getChatsQuery);
 
   return chats;
 }

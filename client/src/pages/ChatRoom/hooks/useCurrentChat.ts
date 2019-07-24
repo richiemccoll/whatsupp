@@ -1,14 +1,25 @@
-import { useMemo, useState } from 'react';
-import chatRoomService from '../services/chat-room';
-import { OptionalChatQueryResult } from '../types/chat-room';
+import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo-hooks';
+
+export const getCurrentChatQuery = gql`
+  query GetChat($chatId: ID!) {
+    chat(chatId: $chatId) {
+      id
+      name
+      picture
+      messages {
+        id
+        content
+        createdAt
+      }
+    }
+  }
+`;
 
 export default function useCurrentChat(id: string) {
-  const [currentChat, setCurrentChat] = useState<OptionalChatQueryResult>(null);
+  const { data: { chat = null } = {} } = useQuery<any>(getCurrentChatQuery, {
+    variables: { chatId: id },
+  });
 
-  useMemo(async () => {
-    const currentChat = await chatRoomService.getCurrentChat(id);
-    setCurrentChat(currentChat);
-  }, [id]);
-
-  return { chat: currentChat, setCurrentChat };
+  return { chat };
 }
