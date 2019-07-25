@@ -20,8 +20,8 @@ export default function MessagesList({ messages }: MessagesListProps) {
   }, [messages.length]);
   return (
     <Styles.Container ref={selfRef}>
-      {messages.map((message: any) => (
-        <Styles.Item key={message.id}>
+      {messages.map((message: any, index: number) => (
+        <Styles.Item key={`${message.id}-${message.content}-${index}`}>
           <Styles.Contents>{message.content}</Styles.Contents>
           <Styles.Timestamp>
             {format(message.createdAt, 'HH:mm')}

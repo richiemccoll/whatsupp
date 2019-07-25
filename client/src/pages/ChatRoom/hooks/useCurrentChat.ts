@@ -1,19 +1,14 @@
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
+import * as fragments from '../../../fragments';
 
 export const getCurrentChatQuery = gql`
   query GetChat($chatId: ID!) {
     chat(chatId: $chatId) {
-      id
-      name
-      picture
-      messages {
-        id
-        content
-        createdAt
-      }
+      ...FullChat
     }
   }
+  ${fragments.fullChat}
 `;
 
 export default function useCurrentChat(id: string) {

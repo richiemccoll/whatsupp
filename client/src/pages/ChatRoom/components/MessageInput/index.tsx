@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import SendIcon from '@material-ui/icons/Send';
 
+import useAddMessage from '../../hooks/useAddMessage';
 import Message from './styles';
 
 interface MessageInputProps {
-  handleSendMessage(content: string): any;
+  chatId: string;
+  chat: any;
 }
 
 export default function MessageInput(props: MessageInputProps) {
   const [message, setMessage] = useState('');
+  const handleSendMessage = useAddMessage(props.chatId, props.chat);
   const submitMessage = () => {
     if (!message) {
       return;
     }
     setMessage('');
-    props.handleSendMessage(message);
+    handleSendMessage(message);
   };
   const onKeyPress = (e: any) => {
     if (e.charCode === 13) {

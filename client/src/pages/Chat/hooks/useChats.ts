@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
 import { ChatList } from '../types/chat.d';
+import * as fragments from '../../../fragments';
 
-const getChatsQuery = gql`
+export const getChatsQuery = gql`
   query GetChats {
     chats {
       id
@@ -15,6 +16,15 @@ const getChatsQuery = gql`
       }
     }
   }
+`;
+
+export const chatsQuery = gql`
+  query Chats {
+    chats {
+      ...Chat
+    }
+  }
+  ${fragments.chat}
 `;
 
 export default function useChats(): ChatList {
