@@ -21,7 +21,6 @@ interface ChatsResult {
 }
 
 export default function useAddMessage(id: any, chat: any) {
-  debugger;
   const [addMessage] = useMutation(addMessageMutation);
   const handleSendMessage = useCallback(
     (content: string) => {
